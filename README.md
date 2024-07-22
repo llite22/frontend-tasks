@@ -5,12 +5,13 @@ The ChildComponent is memoized in order to prevent unnecessary re-rendering.
 But now this memoization doesn't work. 
 1. Explain why memoization doesn't work.
 2. Fix the code so that the ChildComponent does not re-render every time MainComponent re-renders.
-
+При каждом рендеринге создается новая ссылка на функцию, из-за этого происходит повторный рендеринг. UseCallback решает эту проблему и сохраняет ссылку на функцию.
+Each rendering creates a new function reference, because of this, the rendering is repeated. UseCallback solves this problem and saves the function reference.
 ```
-import { Fragment, memo } from 'react';
+import { Fragment, memo, useCallback } from 'react';
 
 const MainComponent = () => {
-	const makeLog = () => console.log('hi from MainComponent');
+	const makeLog = useCallback(() => console.log('hi from MainComponent'), []);
 
 	return (
 		<Fragment>
