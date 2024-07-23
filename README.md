@@ -30,18 +30,30 @@ const ChildComponent = memo(({ makeLog }) => (
 Rewrite this part of code using class-based components.
 
 ```
-const FunctionalCounter = ({ count }) => {
-	// do smth...
+import React, { Component } from 'react';
 
-	useEffect(() => {
-		// This code runs when `count` changes.
-		console.log(`Count has changed to: ${count}`);
-	}, [count]);  // Dependency array includes `count`, so effect runs on count change.
+class ClassCounter extends Component {
+  componentDidMount() {
+    // This code runs when the component is first mounted
+    console.log(`Initial count: ${this.props.count}`);
+  }
 
-	return (
-		<div>Count: {count}</div>
-	);
-};
+  componentDidUpdate(prevProps) {
+    // This code runs when the component updates
+    if (this.props.count !== prevProps.count) {
+      // Check if count has changed
+      console.log(`Count has changed to: ${this.props.count}`);
+    }
+  }
+
+  render() {
+    return (
+      <div>Count: {this.props.count}</div>
+    );
+  }
+}
+
+export default ClassBasedCounter;
 ```
 
 ## task_3
