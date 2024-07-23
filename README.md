@@ -62,7 +62,18 @@ The input data is an array of nested arrays. Each sub-array contains key-value p
 Convert the data into an array of objects where each object has a label property formatted as "Name, Age" and a value property holding the ID.
 The answer should be a function: 
 ```typescript
-const transformData: TransformDataFunction = (data) => { .... }
+
+const transformData: TransformDataFunction = (data) => {
+  return data.map(userArray => {
+    const flatUser = userArray.flat();
+    const [, id, , name, , age] = flatUser;
+    
+    return {
+      label: `${name}, ${age}`,
+      value: id as number
+    };
+  });
+};
 ```
 #### Example Input
 ```typescript
@@ -75,7 +86,7 @@ const inputData: UserArray[] = [
 #### Example Output
 ```typescript
 const inputData: TransformedData[] = [
-   	{ label: "Ivan, 23", value: 1 },
+    { label: "Ivan, 23", value: 1 },
     { label: "Marina, 30", value: 2 },
     { label: "Anna, 28", value: 3 },
 ];
@@ -85,13 +96,8 @@ const inputData: TransformedData[] = [
 Define TypeScript types from the previous task.
 Use union of tuples to define UserData type.
 ```typescript
-type UserData = ...
-type UserArray = UserData[];
-
-type TransformedData = {
-	...
-};
-
-type TransformDataFunction = ...
+type UserArray = [string, string | number][];
+type TransformedData = { label: string; value: number };
+type TransformDataFunction = (data: UserArray[]) => TransformedData[];
 ```
 
